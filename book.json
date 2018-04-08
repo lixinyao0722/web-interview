@@ -22,7 +22,8 @@
       ]
     },
     "anchor-navigation-ex": {
-      "showLevel": false,
+      "showLevel": true,
+      "multipleH1": false,
       "mode": "float",
       "float": {
         "showLevelIcon": false,
