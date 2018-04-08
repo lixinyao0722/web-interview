@@ -1,0 +1,39 @@
+{
+  "language": "zh-hans",
+  "description": "专门收集前端面试题目和答案。",
+  "title": "前端面试题集",
+  "plugins": [
+    "anchor-navigation-ex",
+    "expandable-chapters",
+    "splitter",
+    "edit-link",
+    "prism",
+    "prism-themes",
+    "-highlight",
+    "search-plus",
+    "-lunr",
+    "-search",
+    "advanced-emoji"
+  ],
+  "pluginsConfig": {
+    "prism": {
+      "css": [
+        "prism-themes/themes/prism-xonokai.css"
+      ]
+    },
+    "anchor-navigation-ex": {
+      "showLevel": false,
+      "mode": "float",
+      "float": {
+        "showLevelIcon": false,
+        "level1Icon": "fa fa-hand-o-right",
+        "level2Icon": "fa fa-hand-o-right",
+        "level3Icon": "fa fa-hand-o-right"
+      }
+    },
+    "edit-link": {
+      "base": "https://github.com/lixinyao0722/web-interview/blob/master",
+      "label": "编辑本页"
+    }
+  }
+}
