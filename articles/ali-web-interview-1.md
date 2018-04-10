@@ -22,13 +22,53 @@ IE盒模型height、width包括content、padding、border，如下图。
 
 [box-sizing的使用场景](https://www.jianshu.com/p/3375b15f568f)
 
-| box-sizing属性值 | 类型      | 含义                         | 场景                        |
-|:----------------|:----------|:-----------------------------|:----------------------------|
+| box-sizing属性值 | 类型      | 含义                         | 场景                                   |
+|:----------------|:----------|:-----------------------------|:---------------------------------------|
 | border-box      | IE盒模型  | width=content+padding+border | 表单多项padding、border不同时保证长度一致 |
-| content-box     | 标准盒模型 | width=content width          |                             |
+| content-box     | 标准盒模型 | width=content width          | -                                      |
 
 
-### 弹性flex布局
+### flex弹性布局
+
+- [Flex 布局教程：语法篇](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+- [Flex 布局示例](http://static.vgee.cn/static/index.html)
+
+#### 相关概念
+
+| 名称                                  | 含义                          |
+|:--------------------------------------|:-----------------------------|
+| [flex container](#flex-container属性) | 采用 Flex 布局的元素           |
+| [flex item](#flex-item属性)           | 子元素                        |
+| main axis                             | 默认水平方向，主轴             |
+| cross axis                            | 默认垂直方向，交叉轴            |
+| main start                            | 主轴的开始位置（与边框的交叉点） |
+| main end                              | 主轴的结束位置                 |
+| cross start                           | 交叉轴的开始位置               |
+| cross end                             | 交叉轴的结束位置               |
+| main size                             | flex item占据的主轴的空间      |
+| cross size                            | cross item占据的主轴的空间     |
+
+#### flex container属性
+
+| 属性名           | 含义                                    | 可选值                                                                        | 默认值      |
+|:----------------|:----------------------------------------|:-----------------------------------------------------------------------------|:-----------|
+| flex-direction  | 设置主轴方向                             | row ; row-reverse ; column ; column-reverse                               | row        |
+| flex-wrap       | 设置flex item换行方式                    | nowrap ; wrap ; wrap-reverse                                               | nowrap     |
+| flex-flow       | flex-direction和flex-wrap属性的简写形式   | 见flex-direction和flex-wrap可选值                                             | row nowrap |
+| justify-content | 定义flex item在主轴上的对齐方式           | flex-start ; flex-end ; center ; space-between ; space-around            | flex-start |
+| align-items     | 定义flex item在交叉轴上的对齐方式          | flex-start ; flex-end ; center ; baseline ; stretch                      | stretch    |
+| align-content   | 定义了多根主轴线的对齐方式，一根时该属性无效 | flex-start ; flex-end ; center ; space-between ; space-around ; stretch | stretch    |
+
+#### flex item属性
+
+| 属性名       | 含义                                                                        | 可选值                                                           | 默认值        |
+|:------------|:----------------------------------------------------------------------------|:----------------------------------------------------------------|:-------------|
+| order       | 定义item的排序顺序（小->大），可负数                                           | 整数                                                            | 0            |
+| flex-grow   | container存在剩余空间时item的放大比例                                          | 非负整数                                                         | 0（不放大）   |
+| flex-shrink | container空间不足时item的缩小比例                                             | 非负整数                                                         | 1（正常缩小） |
+| flex-basis  | 定义在分配多余空间之前item占据的主轴空间。浏览器根据这个属性，计算主轴是否有多余空间 | {length} ; auto                                                | auto         |
+| flex        | flex-grow, flex-shrink 和 flex-basis的简写                                   | 见flex-grow, flex-shrink 和 flex-basis属性可选值                 | 0 1 auto     |
+| align-self  | 允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性                   | auto ; flex-start ; flex-end ; center ; baseline ; stretch | auto         |
 
 ### 未知宽高元素如何水平垂直居中
 
