@@ -72,6 +72,17 @@ IE盒模型height、width包括content、padding、border，如下图。
 
 ### 未知宽高元素如何水平垂直居中
 
+假定未知宽高元素为item，其父元素为container，对container做以下css样式控制。
+
+```css
+#container {
+    background-color: #ffe665;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
 
 ## JS部分
 
