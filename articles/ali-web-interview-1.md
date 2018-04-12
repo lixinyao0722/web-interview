@@ -1,4 +1,4 @@
-# 阿里前端社招一
+# 阿里前端社招面试题
 
 
 ## CSS部分
@@ -88,7 +88,29 @@ IE盒模型height、width包括content、padding、border，如下图。
 
 ### 原型链、对象、构造函数之间的关系
 
+- [完整原型链详细图解（构造函数、原型、实例化对象）](https://blog.csdn.net/spicyboiledfish/article/details/71123162)
+
+js原型链、对象及构造函数关系图如下， [点击下载](../assets/resources/process-on/js原型链图.pos) ProcessOn源文件。  
+![js原型链图](../assets/imgs/js原型链图.png)
+
+关键属性
+1. 构造函数
+2. 构造函数.prototype
+3. 构造函数.prototype.constructor
+4. 实例对象.__proto__
+
+```javascript
+构造函数 === 构造函数.prototype.constructor  
+
+构造函数.prototype === 实例对象.__proto__  
+```
+
 ## JS常见跨域手段。jsonp原理、cors如何设置
+
+- iframe
+- scrpt
+- img
+- XMLHttpRequest
 
 ### 对象数组深度拷贝实现原理
 
