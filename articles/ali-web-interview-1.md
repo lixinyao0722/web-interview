@@ -140,7 +140,7 @@ xhr.send()
 
 #### jsonp方式
 
-原理：XMLHttpRequest无法请求不同域数据，但可以请求不同域script。jsonp需要前后端配合，代码样例如下。
+原理：`XMLHttpRequest 1.0`无法请求不同域数据，但可以请求不同域script。jsonp需要前后端配合，代码样例如下。
 
 - 前端部分
 
