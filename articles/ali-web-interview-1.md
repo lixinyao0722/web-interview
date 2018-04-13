@@ -105,12 +105,82 @@ js原型链、对象及构造函数关系图如下， [点击下载](../assets/r
 构造函数.prototype === 实例对象.__proto__  
 ```
 
-## JS常见跨域手段。jsonp原理、cors如何设置
+### JS常见跨域手段。jsonp原理、cors如何设置
 
-- iframe
-- scrpt
-- img
-- XMLHttpRequest
+- [详解js跨域问题](https://segmentfault.com/a/1190000000718840)
+
+#### cors方式 (cross origin resource share)
+
+基本思想：利用自定义HTTP协议头让浏览器与服务器通讯，决定请求是否成功。
+
+- 服务端设置
+
+```
+Access-Control-Allow-Origin: <origin> | *
+```
+`origin`被允许跨域访问这个资源的网站，* 代表全部网站。`浏览器会检测这个参数`，如果符合才会获取资源。
+
+```
+Access-Control-Allow-Credentials: true | false
+```
+是否允许浏览器请求资源时携带cookie信息。  
+该属性要XMLHttpRequest设置`withCredentials = true`。
+
+- 前端
+
+```javascript
+const xhr = new XMLHttpRequest()
+xhr.open('GET', 'http://example.com/data.php') // 使用绝对路径
+xhr.withCredentials = true // 浏览器请求时带上example.com域名cookie
+xhr.onreadystatechange = (xhr, event) => {
+  // 处理
+}
+xhr.send()
+```
+
+#### jsonp方式
+
+原理：XMLHttpRequest无法请求不同域数据，但可以请求不同域script。jsonp需要前后端配合，代码样例如下。
+
+- 前端部分
+
+```html
+<script type="text/javascript">
+    function doSomething(json){
+        //处理获得的json数据
+        const obj = JSON.parse(json)
+    }
+</script>
+<script src="http://example.com/data.php?callback=doSomething"></script>
+```
+- 后端部分
+
+```php
+$callback = urldecode(trim($_GET['callback']));
+$data = [
+        "ret" => 0,
+        "msg" => "success",
+        "data" => [
+                "id" => 10000,
+                "name" => "Tom",
+                "age" => 20,
+            ]
+    ];
+echo 'callback=(' . json_encode($data) . ')';
+exit();
+```
+- 优点  
+兼容性好，古老的浏览器同样适用
+
+- 缺点  
+只支持GET方式请求  
+不能解决不同域的两个页面之间如何进行JavaScript调用的问题
+
+#### document.domain方式
+
+#### window.name方式
+
+#### window.postMessage
 
 ### 对象数组深度拷贝实现原理
 
