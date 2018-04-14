@@ -88,7 +88,7 @@ IE盒模型height、width包括content、padding、border，如下图。
 
 ### 原型链、对象、构造函数之间的关系
 
-- [完整原型链详细图解（构造函数、原型、实例化对象）](https://blog.csdn.net/spicyboiledfish/article/details/71123162)
+- [完整原型链详细图解（构造实例对象.proto函数、原型、实例化对象）](https://blog.csdn.net/spicyboiledfish/article/details/71123162)
 
 js原型链、对象及构造函数关系图如下， [点击下载](../assets/resources/process-on/js原型链图.pos) ProcessOn源文件。  
 ![js原型链图](../assets/imgs/js原型链图.png)
@@ -97,7 +97,7 @@ js原型链、对象及构造函数关系图如下， [点击下载](../assets/r
 1. 构造函数
 2. 构造函数.prototype
 3. 构造函数.prototype.constructor
-4. 实例对象.__proto__
+4. `实例对象.__proto__` 
 
 ```javascript
 构造函数 === 构造函数.prototype.constructor  
@@ -118,7 +118,7 @@ js原型链、对象及构造函数关系图如下， [点击下载](../assets/r
 ```
 Access-Control-Allow-Origin: <origin> | *
 ```
-`origin`被允许跨域访问这个资源的网站，* 代表全部网站。`浏览器会检测这个参数`，如果符合才会获取资源。
+`origin`被允许跨域访问这个资源的网站，* 代表全部网站。**浏览器会检测这个参数**，如果符合才会获取资源。
 
 ```
 Access-Control-Allow-Credentials: true | false
@@ -140,7 +140,7 @@ xhr.send()
 
 #### jsonp方式
 
-原理：XMLHttpRequest无法请求不同域数据，但可以请求不同域script。jsonp需要前后端配合，代码样例如下。
+原理：`XMLHttpRequest 1.0`无法请求不同域数据，但可以请求不同域script。jsonp需要前后端配合，代码样例如下。
 
 - 前端部分
 
@@ -178,9 +178,90 @@ exit();
 
 #### document.domain方式
 
+document.domain通过获得目标页面window完全读取权限方式进行通讯，前置条件如下。
+
+- 可获取其他页面的window对象
+- 两页面含有相同二级域名
+- 协议相同
+- 端口相同
+
+常用场景，父页面与iframe引入的子页面进行通讯。  
+假设父页面 `http://one.example.com/parent.html` 中有如下代码。
+
+```html
+<iframe id="iframe" src="http://two.example.com/child.html"></iframe> 
+
+<script>
+    document.domain = 'example.com'//提升域名
+    const iframe = document.getElementById('iframe')
+    const childDocument = iframe.contentDocument // 具有完全读写权限
+    const childWindow = iframe.contentWindow // 具有完全读写权限
+</script> 
+```
+
+子页面`http://two.example.com/child.html`
+
+```html
+<script>
+    document.domain = 'example.com'//提升域名
+</script>
+```
+
 #### window.name方式
 
+原理：利用`window.name`不随url跳转而改变，与document.domain方式相比没有前置条件限制。出于安全原因，浏览器限制了`window.name`必须是字符串，常用场景如下。
+
+假设父页面 `http://one.example.com/parent.html` 中有如下代码。
+
+```html
+<iframe id="iframe" src="http://any.other.com/child.html"></iframe> 
+
+<script>
+    const iframe = document.getElementById('iframe')
+    iframe.onload = () => {
+      iframe.onload = () => {
+        //处理数据
+        const data = iframe.contentWindow.name
+      }
+      //iframe获取了不同源的数据，再将其src指定同源页面，即可访问iframe.contentWindow对象，而iframe.contentWindow.name数据保持不变
+      iframe.src = 'about:black'//about:blank，javascript: 和 data: 中的内容，继承了载入他们的页面的源
+    }
+</script>
+```
+
+子页面`http://any.other.com/child.html`只需要获取`any.other.com`域名数据并设置到`window.name`上即可。
+
 #### window.postMessage
+
+Html5新增API，其跨域能力不受同源限制，下面样例是iframe向父页面发送消息。
+
+- 主页面
+
+```javascript
+// 监听消息事件
+window.addEventListener('message', e => {
+  // 只过滤需要的信息
+  if (e.origin === 'http://one.example.com') {
+    const {data} = e
+    //处理数据
+  } 
+})
+
+```
+
+- 主页面引入的iframe页面
+
+```javascript
+const message = 'any'
+const targetOrigin = '*'
+// 通过window.parent对象向父页面发送数据
+window.parent.postMessage(message, targetOrigin)
+```
+
+`iframe.contentWindow`: 接受消息的 Window 对象。  
+`message`: 在最新的浏览器中可以是对象。  
+`targetOrigin`: 目标的源，* 表示任意。
+
 
 ### 对象数组深度拷贝实现原理
 
