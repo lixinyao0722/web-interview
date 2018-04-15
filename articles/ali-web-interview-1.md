@@ -231,7 +231,7 @@ document.domain通过获得目标页面window完全读取权限方式进行通�
 
 子页面`http://any.other.com/child.html`只需要获取`any.other.com`域名数据并设置到`window.name`上即可。
 
-#### window.postMessage
+#### window.postMessage方式
 
 Html5新增API，其跨域能力不受同源限制，下面样例是iframe向父页面发送消息。
 
@@ -264,6 +264,33 @@ window.parent.postMessage(message, targetOrigin)
 
 
 ### 对象数组深度拷贝实现原理
+
+- [javaScript中浅拷贝和深拷贝的实现](https://github.com/wengjq/Blog/issues/3)
+
+#### js两种基本类型
+
+- 值类型  
+包括5种基本类型：Undefined、Null、Number、String、Boolean。变量和数据直接存放在栈内存中。
+
+- 引用类型
+包括对象、数组、函数等。变量保存是一个指向数据的指针，变量名存放于栈内存，数据存放于堆内存。
+
+>1. 浅拷贝复制的是变量保存的指针，指向堆内存中同一片数据段，当修改数据时，两变量访问得到的值均发生改变。
+>2. 深度拷贝会在堆内存中重新开辟一段内存，把源数据完整复制，复制变量指针指向新内存，修改数据时变量访问的值互不影响。
+
+#### 深度拷贝实现方法
+
+- 利用`JSON.parse`和`JSON.stringify`
+
+```javascript
+const obj = {name: 'Tom', age: 20}
+const copyObj = JSON.parse(JSON.stringify(obj))
+```
+
+- 递归方式
+
+1. 若数据为普通类型，直接赋值。
+2. 若数据为对象或数组类型，递归复制。
 
 ### 如何获取一个元素到视图顶部的距离
 
